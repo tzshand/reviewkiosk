@@ -93,6 +93,10 @@ export default function KioskPage() {
           <p className="text-base text-[var(--color-kiosk-muted)]">
             Tap a star to rate your experience
           </p>
+
+          <p className="text-xs text-[var(--color-kiosk-muted)] opacity-50 mt-4">
+            v2 — pipeline test
+          </p>
         </div>
       )}
 
