@@ -5,6 +5,7 @@ export const config = {
   primaryColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR || "#F59E0B",
   logoUrl: process.env.NEXT_PUBLIC_LOGO_URL || "",
   idleTimeoutMs: Number(process.env.NEXT_PUBLIC_IDLE_TIMEOUT_MS) || 15000,
+  incentiveText: process.env.NEXT_PUBLIC_INCENTIVE_TEXT || "",
   adminTapCount: 5,
   adminTapWindowMs: 3000,
   versionPollIntervalMs: 60000,

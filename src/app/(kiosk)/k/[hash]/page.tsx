@@ -31,6 +31,7 @@ export default async function KioskPage({
         primaryColor: business.primary_color || "#F59E0B",
         logoUrl: business.logo_url || "",
         idleTimeoutMs: business.idle_timeout_ms || 15000,
+        incentiveText: business.incentive_text || "",
         hash: business.hash,
         configVersion: business.config_version || 1,
       };
@@ -46,6 +47,7 @@ export default async function KioskPage({
       primaryColor: envConfig.primaryColor,
       logoUrl: envConfig.logoUrl,
       idleTimeoutMs: envConfig.idleTimeoutMs,
+      incentiveText: envConfig.incentiveText,
       hash,
       configVersion: 0,
     };

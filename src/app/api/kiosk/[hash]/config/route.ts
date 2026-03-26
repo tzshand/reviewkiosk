@@ -30,6 +30,7 @@ export async function GET(
       primaryColor: business.primary_color || "#F59E0B",
       logoUrl: business.logo_url || "",
       idleTimeoutMs: business.idle_timeout_ms || 15000,
+      incentiveText: business.incentive_text || "",
       configVersion: business.config_version || 1,
     });
   } catch {

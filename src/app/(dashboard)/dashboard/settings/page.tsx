@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 
 interface Settings {
   name: string;
+  incentiveText: string;
   googleReviewUrl: string;
   feedbackEmail: string;
   primaryColor: string;
@@ -41,6 +42,7 @@ export default function SettingsPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: settings.name,
+          incentiveText: settings.incentiveText,
           googleReviewUrl: settings.googleReviewUrl,
           feedbackEmail: settings.feedbackEmail,
           primaryColor: settings.primaryColor,
@@ -107,6 +109,24 @@ export default function SettingsPage() {
           />
           <p className="text-xs text-gray-400 mt-1">
             Shown on the kiosk welcome screen
+          </p>
+        </div>
+
+        {/* Incentive Text */}
+        <div className="p-5">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Incentive Text
+          </label>
+          <input
+            type="text"
+            value={settings.incentiveText}
+            onChange={(e) => update("incentiveText", e.target.value)}
+            placeholder="Review us for 50% off your next order!"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+          />
+          <p className="text-xs text-gray-400 mt-1">
+            Shown below the heading to encourage reviews (e.g. &quot;Review us
+            for 50% off your next order!&quot;)
           </p>
         </div>
 

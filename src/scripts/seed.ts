@@ -21,7 +21,7 @@ if (!SUPABASE_KEY) {
 const TEST_EMAIL = "colin@reviewkiosk.com";
 const TEST_PASSWORD = "reviewkiosk123";
 const TEST_BUSINESS_NAME = "Demo Business";
-const TEST_HASH = "demo";
+const TEST_HASH = "35968d04";
 
 async function seed() {
   const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -58,6 +58,9 @@ async function seed() {
           name: TEST_BUSINESS_NAME,
           feedback_email: TEST_EMAIL,
           primary_color: "#F59E0B",
+          google_review_url: "https://g.page/r/CZ_hvEoD4KL-EBM/review",
+          logo_url: "/logo.svg",
+          incentive_text: "Review us for 50% off your next order!",
         })
         .select()
         .single();
@@ -99,6 +102,9 @@ async function seed() {
         name: TEST_BUSINESS_NAME,
         feedback_email: TEST_EMAIL,
         primary_color: "#F59E0B",
+        google_review_url: "https://g.page/r/CZ_hvEoD4KL-EBM/review",
+        logo_url: "/logo.svg",
+        incentive_text: "Review us for 50% off your next order!",
       })
       .select()
       .single();

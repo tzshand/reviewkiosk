@@ -1,66 +1,35 @@
 "use client";
 
-import { useState } from "react";
-
 interface FeedbackFormProps {
   rating: number;
   hash: string;
   onSubmit: () => void;
 }
 
-export function FeedbackForm({ rating, hash, onSubmit }: FeedbackFormProps) {
-  const [feedback, setFeedback] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-
-  const handleSubmit = async () => {
-    setSubmitting(true);
-    try {
-      await fetch("/api/feedback", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ rating, feedback, hash }),
-      });
-    } catch {
-      // Silently fail — we don't want to show errors to customers
-    }
-    onSubmit();
-  };
+export function FeedbackForm({ rating, hash }: FeedbackFormProps) {
+  const feedbackUrl = `${typeof window !== "undefined" ? window.location.origin : ""}/f/${hash}?r=${rating}`;
 
   return (
-    <div className="fade-in flex flex-col items-center gap-6 w-full max-w-md px-4">
-      <div className="text-center">
-        <h2 className="text-2xl font-semibold text-[var(--color-kiosk-text)]">
-          We&apos;re sorry to hear that.
-        </h2>
-        <p className="text-lg text-[var(--color-kiosk-muted)] mt-2">
-          Your feedback helps us improve.
-        </p>
+    <div className="fade-in flex flex-col items-center gap-6 text-center px-4">
+      <h2 className="text-2xl font-semibold text-[var(--color-kiosk-text)]">
+        We appreciate your honesty
+      </h2>
+
+      <p className="text-lg text-[var(--color-kiosk-muted)] max-w-sm">
+        Scan the code below to share your feedback privately on your phone.
+      </p>
+
+      <div className="bg-white p-4 rounded-2xl shadow-md">
+        <img
+          src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(feedbackUrl)}`}
+          alt="Scan to share feedback"
+          width={200}
+          height={200}
+        />
       </div>
 
-      <textarea
-        value={feedback}
-        onChange={(e) => setFeedback(e.target.value)}
-        placeholder="Tell us what went wrong..."
-        rows={4}
-        autoFocus
-        className="w-full rounded-xl border-2 border-[var(--color-kiosk-star-empty)]
-                   bg-white p-4 text-lg resize-none
-                   focus:border-[var(--color-kiosk-accent)] focus:outline-none
-                   placeholder:text-[var(--color-kiosk-muted)]"
-      />
-
-      <button
-        onClick={handleSubmit}
-        disabled={submitting}
-        className="w-full py-4 rounded-xl text-lg font-semibold text-white
-                   bg-[var(--color-kiosk-negative)] hover:bg-[#4B5563]
-                   disabled:opacity-50 transition-colors"
-      >
-        {submitting ? "Sending..." : "Submit Feedback"}
-      </button>
-
-      <p className="text-sm text-[var(--color-kiosk-muted)]">
-        This feedback is sent privately to the owner.
+      <p className="text-base text-[var(--color-kiosk-muted)]">
+        Your feedback is sent privately to the owner
       </p>
     </div>
   );

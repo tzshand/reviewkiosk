@@ -27,6 +27,7 @@ export async function GET() {
     idleTimeoutMs: business.idle_timeout_ms,
     hash: business.hash,
     isActive: business.is_active,
+    incentiveText: business.incentive_text || "",
     configVersion: business.config_version,
   });
 }
@@ -44,6 +45,7 @@ export async function PUT(req: NextRequest) {
     primaryColor,
     logoUrl,
     idleTimeoutMs,
+    incentiveText,
   } = body;
 
   const supabase = getSupabase();
@@ -65,6 +67,7 @@ export async function PUT(req: NextRequest) {
   if (primaryColor !== undefined) updates.primary_color = primaryColor;
   if (logoUrl !== undefined) updates.logo_url = logoUrl;
   if (idleTimeoutMs !== undefined) updates.idle_timeout_ms = idleTimeoutMs;
+  if (incentiveText !== undefined) updates.incentive_text = incentiveText;
 
   const { error } = await supabase
     .from(TABLES.businesses)

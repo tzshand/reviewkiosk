@@ -16,7 +16,7 @@ export function StarRating({ onRate }: StarRatingProps) {
   };
 
   return (
-    <div className="flex gap-4 justify-center">
+    <div className="flex gap-6 justify-center">
       {[1, 2, 3, 4, 5].map((star) => (
         <button
           key={star}
@@ -29,8 +29,8 @@ export function StarRating({ onRate }: StarRatingProps) {
           aria-label={`${star} star${star > 1 ? "s" : ""}`}
         >
           <svg
-            width="64"
-            height="64"
+            width="80"
+            height="80"
             viewBox="0 0 24 24"
             fill={star <= (hoveredStar || selectedStar) ? "var(--color-kiosk-star)" : "var(--color-kiosk-star-empty)"}
             className="transition-colors duration-150 drop-shadow-sm"

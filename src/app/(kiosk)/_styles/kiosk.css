@@ -2,6 +2,7 @@
 
 @theme inline {
   --font-sans: var(--font-inter);
+  --font-display: var(--font-display);
   --color-kiosk-bg: #FAFAF9;
   --color-kiosk-card: #FFFFFF;
   --color-kiosk-text: #1C1917;

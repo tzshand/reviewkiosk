@@ -15,6 +15,7 @@ export interface KioskConfig {
   primaryColor: string;
   logoUrl: string;
   idleTimeoutMs: number;
+  incentiveText: string;
   hash: string;
   configVersion: number;
 }
@@ -80,14 +81,22 @@ export function KioskApp({ config }: { config: KioskConfig }) {
             <img
               src={config.logoUrl}
               alt={config.businessName}
-              className="h-16 object-contain"
+              className="h-20 object-contain"
             />
           )}
 
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-[var(--color-kiosk-text)]">
-              How was your visit?
+            <h1
+              className="text-4xl font-bold text-[var(--color-kiosk-text)]"
+              style={{ fontFamily: "var(--font-display), system-ui, sans-serif" }}
+            >
+              We&apos;d love to know what you think!
             </h1>
+            {config.incentiveText && (
+              <p className="text-xl text-[var(--color-kiosk-accent)] font-semibold mt-3">
+                {config.incentiveText}
+              </p>
+            )}
             {config.businessName !== "Our Business" && (
               <p className="text-lg text-[var(--color-kiosk-muted)] mt-2">
                 at {config.businessName}

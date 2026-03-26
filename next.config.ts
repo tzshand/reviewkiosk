@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
         // Android WebView sends x-requested-with header with the app package name.
         // Redirect those requests from / to the kiosk demo route.
         source: "/",
-        destination: "/k/demo",
+        destination: "/k/35968d04",
         has: [
           {
             type: "header",

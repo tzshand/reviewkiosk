@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS reviewkiosk_businesses (
   primary_color TEXT DEFAULT '#F59E0B',
   logo_url TEXT DEFAULT '',
   idle_timeout_ms INTEGER DEFAULT 15000,
+  incentive_text TEXT,
   is_active BOOLEAN DEFAULT TRUE,
   config_version INTEGER DEFAULT 1,
   created_at TIMESTAMP DEFAULT NOW() NOT NULL,

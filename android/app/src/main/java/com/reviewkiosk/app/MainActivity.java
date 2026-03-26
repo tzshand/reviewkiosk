@@ -4,8 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.UserManager;
 import android.provider.Settings;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,6 +21,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
         dpm = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
         adminComponent = new ComponentName(this, KioskDeviceAdmin.class);
+
+        // Enforce kiosk as default launcher so Android updates can't reset it
+        enforceDefaultLauncher();
 
         // Keep screen on and go fullscreen
         getWindow().addFlags(
@@ -125,11 +134,58 @@ public class MainActivity extends AppCompatActivity {
         webView.loadUrl(KIOSK_URL);
     }
 
+    @SuppressLint("NewApi")
+    private void enforceDefaultLauncher() {
+        if (dpm == null || !dpm.isDeviceOwnerApp(getPackageName())) return;
+
+        // Set this app as the persistent preferred home activity.
+        // This survives Android updates — the OS cannot clear a device-owner-set preferred activity.
+        IntentFilter homeFilter = new IntentFilter(Intent.ACTION_MAIN);
+        homeFilter.addCategory(Intent.CATEGORY_HOME);
+        homeFilter.addCategory(Intent.CATEGORY_DEFAULT);
+
+        ComponentName splashComponent = new ComponentName(this, SplashActivity.class);
+        dpm.addPersistentPreferredActivity(adminComponent, homeFilter, splashComponent);
+
+        // Disable other launchers so there's nothing to fall back to
+        disableOtherLaunchers();
+
+        // Restrict user from adding accounts, factory resetting, etc.
+        dpm.addUserRestriction(adminComponent, UserManager.DISALLOW_FACTORY_RESET);
+        dpm.addUserRestriction(adminComponent, UserManager.DISALLOW_SAFE_BOOT);
+        dpm.addUserRestriction(adminComponent, UserManager.DISALLOW_ADD_USER);
+    }
+
+    private void disableOtherLaunchers() {
+        PackageManager pm = getPackageManager();
+        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory(Intent.CATEGORY_HOME);
+
+        List<ResolveInfo> launchers = pm.queryIntentActivities(homeIntent, 0);
+        for (ResolveInfo info : launchers) {
+            String pkg = info.activityInfo.packageName;
+            if (!pkg.equals(getPackageName())) {
+                // Hide other launchers so they can't be selected
+                dpm.setApplicationHidden(adminComponent, pkg, true);
+            }
+        }
+    }
+
     private void startLockTaskIfOwner() {
         if (dpm != null && dpm.isDeviceOwnerApp(getPackageName())) {
             // Whitelist this app for lock task mode
             dpm.setLockTaskPackages(adminComponent,
                     new String[]{getPackageName(), "com.android.settings"});
+
+            // Configure lock task features: disable notifications, status bar, recents, etc.
+            int lockTaskFeatures =
+                    DevicePolicyManager.LOCK_TASK_FEATURE_NONE;
+            try {
+                dpm.setLockTaskFeatures(adminComponent, lockTaskFeatures);
+            } catch (Exception e) {
+                // Fallback for older API levels
+            }
+
             startLockTask();
         }
     }
