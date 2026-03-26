@@ -10,9 +10,13 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Review Kiosk",
   description: "Leave us a review",
+  manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
+  },
+  other: {
+    "mobile-web-app-capable": "yes",
   },
 };
 
