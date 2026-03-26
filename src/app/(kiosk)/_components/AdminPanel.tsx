@@ -22,7 +22,6 @@ export function AdminPanel({ onClose }: AdminPanelProps) {
   const handleReload = () => window.location.reload();
 
   const handleWifiSettings = () => {
-    // Works in Android WebView with intent support
     window.location.href = "intent:#Intent;action=android.settings.WIFI_SETTINGS;end";
   };
 
@@ -39,16 +38,15 @@ export function AdminPanel({ onClose }: AdminPanelProps) {
   };
 
   const buttons = [
-    { label: "WiFi Settings", icon: "📶", action: handleWifiSettings },
-    { label: "Volume / Sound", icon: "🔊", action: handleSoundSettings },
-    { label: "Brightness", icon: "☀️", action: handleDisplaySettings },
-    { label: "Android Settings", icon: "⚙️", action: handleAndroidSettings },
-    { label: "Reload App", icon: "🔄", action: handleReload },
+    { label: "WiFi Settings", icon: "\uD83D\uDCF6", action: handleWifiSettings },
+    { label: "Volume / Sound", icon: "\uD83D\uDD0A", action: handleSoundSettings },
+    { label: "Brightness", icon: "\u2600\uFE0F", action: handleDisplaySettings },
+    { label: "Android Settings", icon: "\u2699\uFE0F", action: handleAndroidSettings },
+    { label: "Reload App", icon: "\uD83D\uDD04", action: handleReload },
   ];
 
   return (
     <div className="fixed inset-0 z-50 bg-[var(--color-admin-bg)] text-[var(--color-admin-text)] flex flex-col">
-      {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-[var(--color-admin-card)]">
         <h1 className="text-xl font-semibold">Admin Panel</h1>
         <button
@@ -59,7 +57,6 @@ export function AdminPanel({ onClose }: AdminPanelProps) {
         </button>
       </div>
 
-      {/* Controls */}
       <div className="flex-1 overflow-y-auto p-4 space-y-3">
         {buttons.map(({ label, icon, action }) => (
           <button
@@ -75,7 +72,6 @@ export function AdminPanel({ onClose }: AdminPanelProps) {
         ))}
       </div>
 
-      {/* Version info */}
       <div className="p-4 border-t border-[var(--color-admin-card)] text-sm text-[var(--color-admin-muted)]">
         <p>Version: {versionInfo?.version?.slice(0, 8) || "dev"}</p>
         <p>Commit: {versionInfo?.deployedAt || "local"}</p>

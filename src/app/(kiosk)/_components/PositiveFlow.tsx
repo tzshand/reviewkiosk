@@ -8,7 +8,7 @@ interface PositiveFlowProps {
 
 export function PositiveFlow({ rating }: PositiveFlowProps) {
   const reviewUrl = config.googleReviewUrl;
-  const stars = "★".repeat(rating);
+  const stars = "\u2605".repeat(rating);
 
   return (
     <div className="fade-in flex flex-col items-center gap-6 text-center px-4">
@@ -25,7 +25,6 @@ export function PositiveFlow({ rating }: PositiveFlowProps) {
 
       {reviewUrl ? (
         <div className="flex flex-col items-center gap-4 mt-2">
-          {/* QR code - we'll generate this dynamically */}
           <div className="bg-white p-4 rounded-2xl shadow-md">
             <img
               src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(reviewUrl)}`}

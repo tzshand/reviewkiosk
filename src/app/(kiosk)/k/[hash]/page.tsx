@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useCallback, useRef } from "react";
-import { StarRating } from "@/components/StarRating";
-import { PositiveFlow } from "@/components/PositiveFlow";
-import { FeedbackForm } from "@/components/FeedbackForm";
-import { AdminPanel } from "@/components/AdminPanel";
+import { StarRating } from "../../_components/StarRating";
+import { PositiveFlow } from "../../_components/PositiveFlow";
+import { FeedbackForm } from "../../_components/FeedbackForm";
+import { AdminPanel } from "../../_components/AdminPanel";
 import { useIdleReset } from "@/hooks/useIdleReset";
 import { useVersionCheck } from "@/hooks/useVersionCheck";
 import { config } from "@/lib/config";
@@ -16,13 +16,10 @@ export default function KioskPage() {
   const [rating, setRating] = useState(0);
   const [showAdmin, setShowAdmin] = useState(false);
 
-  // Admin panel: 5 taps in bottom-left corner within 3 seconds
   const adminTaps = useRef<number[]>([]);
 
-  // Auto-reload on new deployment
   useVersionCheck();
 
-  // Reset to welcome after idle (only on result screens)
   const resetToWelcome = useCallback(() => {
     setScreen("welcome");
     setRating(0);
@@ -61,7 +58,6 @@ export default function KioskPage() {
 
   return (
     <div className="h-full flex flex-col items-center justify-center relative">
-      {/* Admin trigger zone — bottom-left corner, invisible */}
       <div
         className="fixed bottom-0 left-0 w-16 h-16 z-40"
         onClick={handleAdminTap}
@@ -104,7 +100,7 @@ export default function KioskPage() {
 
       {screen === "thankyou" && (
         <div className="fade-in flex flex-col items-center gap-4 text-center px-6">
-          <div className="text-6xl">🙏</div>
+          <div className="text-6xl">{"\uD83D\uDE4F"}</div>
           <h2 className="text-2xl font-semibold text-[var(--color-kiosk-text)]">
             Thank you for your feedback
           </h2>

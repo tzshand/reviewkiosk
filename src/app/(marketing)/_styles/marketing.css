@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme {
+  --font-heading: "Cabinet Grotesk", "Segoe UI", system-ui, sans-serif;
+  --font-body: "General Sans", "Segoe UI", system-ui, sans-serif;
+
+  --color-navy-950: #09090B;
+  --color-navy-900: #18181B;
+  --color-navy-800: #27272A;
+  --color-navy-700: #3F3F46;
+  --color-navy-600: #52525B;
+
+  --color-accent: #F59E0B;
+  --color-accent-hover: #D97706;
+  --color-accent-light: #FDE68A;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--color-navy-950);
+    color: #FAFAFA;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+}

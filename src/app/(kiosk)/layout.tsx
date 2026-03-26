@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "./_styles/kiosk.css";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -10,6 +10,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Review Kiosk",
   description: "Leave us a review",
+  robots: { index: false, follow: false },
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -27,11 +28,11 @@ export const viewport: Viewport = {
   userScalable: false,
 };
 
-export default function RootLayout({
+export default function KioskLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en" className={`${inter.variable} h-full`}>
       <body className="h-full overflow-hidden select-none">{children}</body>

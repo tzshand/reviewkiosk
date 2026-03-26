@@ -1,7 +1,24 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return [
+      {
+        // Android WebView sends x-requested-with header with the app package name.
+        // Redirect those requests from / to the kiosk demo route.
+        source: "/",
+        destination: "/k/demo",
+        has: [
+          {
+            type: "header",
+            key: "x-requested-with",
+            value: "com.reviewkiosk.app",
+          },
+        ],
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
