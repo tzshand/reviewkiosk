@@ -1,15 +1,40 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getSupabase } from "@/lib/db";
+import { TABLES } from "@/lib/db/schema";
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { rating, feedback, name } = body;
+    const { rating, feedback, hash } = body;
 
-    // For now, log it. We'll add email delivery later (Resend, SendGrid, etc.)
-    console.log("Feedback received:", { rating, feedback, name, timestamp: new Date().toISOString() });
+    console.log("Feedback received:", {
+      rating,
+      feedback,
+      hash,
+      timestamp: new Date().toISOString(),
+    });
 
-    // TODO: Send email to business owner
-    // TODO: Store in database if needed
+    if (hash) {
+      try {
+        const supabase = getSupabase();
+
+        const { data: business } = await supabase
+          .from(TABLES.businesses)
+          .select("id")
+          .eq("hash", hash)
+          .single();
+
+        if (business) {
+          await supabase.from(TABLES.feedback).insert({
+            business_id: business.id,
+            rating,
+            feedback: feedback || null,
+          });
+        }
+      } catch {
+        // DB not configured — log only
+      }
+    }
 
     return NextResponse.json({ ok: true });
   } catch {

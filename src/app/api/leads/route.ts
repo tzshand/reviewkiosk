@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getSupabase } from "@/lib/db";
+import { TABLES } from "@/lib/db/schema";
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,7 +14,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // For now, log it. Database storage comes in Phase 2.
     console.log("Lead received:", {
       name,
       email,
@@ -21,6 +22,19 @@ export async function POST(req: NextRequest) {
       source: source || "unknown",
       timestamp: new Date().toISOString(),
     });
+
+    try {
+      const supabase = getSupabase();
+      await supabase.from(TABLES.leads).insert({
+        name,
+        email,
+        business_name,
+        phone: phone || null,
+        source: source || "unknown",
+      });
+    } catch {
+      // DB not configured — log only
+    }
 
     return NextResponse.json({ ok: true });
   } catch {

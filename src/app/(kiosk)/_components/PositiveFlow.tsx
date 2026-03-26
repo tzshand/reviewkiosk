@@ -1,13 +1,11 @@
 "use client";
 
-import { config } from "@/lib/config";
-
 interface PositiveFlowProps {
   rating: number;
+  googleReviewUrl: string;
 }
 
-export function PositiveFlow({ rating }: PositiveFlowProps) {
-  const reviewUrl = config.googleReviewUrl;
+export function PositiveFlow({ rating, googleReviewUrl }: PositiveFlowProps) {
   const stars = "\u2605".repeat(rating);
 
   return (
@@ -23,11 +21,11 @@ export function PositiveFlow({ rating }: PositiveFlowProps) {
         love a Google review!
       </p>
 
-      {reviewUrl ? (
+      {googleReviewUrl ? (
         <div className="flex flex-col items-center gap-4 mt-2">
           <div className="bg-white p-4 rounded-2xl shadow-md">
             <img
-              src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(reviewUrl)}`}
+              src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(googleReviewUrl)}`}
               alt="Scan to review"
               width={200}
               height={200}

@@ -4,10 +4,11 @@ import { useState } from "react";
 
 interface FeedbackFormProps {
   rating: number;
+  hash: string;
   onSubmit: () => void;
 }
 
-export function FeedbackForm({ rating, onSubmit }: FeedbackFormProps) {
+export function FeedbackForm({ rating, hash, onSubmit }: FeedbackFormProps) {
   const [feedback, setFeedback] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
@@ -17,7 +18,7 @@ export function FeedbackForm({ rating, onSubmit }: FeedbackFormProps) {
       await fetch("/api/feedback", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ rating, feedback }),
+        body: JSON.stringify({ rating, feedback, hash }),
       });
     } catch {
       // Silently fail — we don't want to show errors to customers
