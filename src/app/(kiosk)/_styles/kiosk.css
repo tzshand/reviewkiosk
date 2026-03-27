@@ -57,3 +57,13 @@ html, body {
 .fade-in {
   animation: fade-in 0.4s ease-out;
 }
+
+@keyframes incentive-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+.incentive-text {
+  animation: incentive-pulse 2.5s ease-in-out infinite;
+  text-shadow: 0 2px 12px rgba(245, 158, 11, 0.3);
+}

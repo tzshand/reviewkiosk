@@ -76,29 +76,32 @@ export function KioskApp({ config }: { config: KioskConfig }) {
       />
 
       {screen === "welcome" && (
-        <div className="fade-in flex flex-col items-center gap-8 px-6">
+        <div className="fade-in flex flex-col items-center gap-10 px-6">
           {config.logoUrl && (
             <img
               src={config.logoUrl}
               alt={config.businessName}
-              className="h-20 object-contain"
+              className="h-28 object-contain"
             />
           )}
 
-          <div className="text-center">
+          <div className="text-center flex flex-col items-center gap-4">
             <h1
-              className="text-4xl font-bold text-[var(--color-kiosk-text)]"
+              className="text-5xl font-bold text-[var(--color-kiosk-text)] leading-tight"
               style={{ fontFamily: "var(--font-display), system-ui, sans-serif" }}
             >
               We&apos;d love to know what you think!
             </h1>
             {config.incentiveText && (
-              <p className="text-xl text-[var(--color-kiosk-accent)] font-semibold mt-3">
+              <p
+                className="text-6xl font-extrabold tracking-tight text-[var(--color-kiosk-accent)] leading-none mt-2 incentive-text"
+                style={{ fontFamily: "var(--font-display), system-ui, sans-serif" }}
+              >
                 {config.incentiveText}
               </p>
             )}
             {config.businessName !== "Our Business" && (
-              <p className="text-lg text-[var(--color-kiosk-muted)] mt-2">
+              <p className="text-xl text-[var(--color-kiosk-muted)] mt-1">
                 at {config.businessName}
               </p>
             )}
@@ -106,7 +109,7 @@ export function KioskApp({ config }: { config: KioskConfig }) {
 
           <StarRating onRate={handleRate} />
 
-          <p className="text-base text-[var(--color-kiosk-muted)]">
+          <p className="text-lg text-[var(--color-kiosk-muted)]">
             Tap a star to rate your experience
           </p>
         </div>
@@ -128,12 +131,13 @@ export function KioskApp({ config }: { config: KioskConfig }) {
       )}
 
       {screen === "thankyou" && (
-        <div className="fade-in flex flex-col items-center gap-4 text-center px-6">
-          <div className="text-6xl">{"\uD83D\uDE4F"}</div>
-          <h2 className="text-2xl font-semibold text-[var(--color-kiosk-text)]">
+        <div className="fade-in flex flex-col items-center gap-6 text-center px-6">
+          <div className="text-8xl">{"\uD83D\uDE4F"}</div>
+          <h2 className="text-4xl font-bold text-[var(--color-kiosk-text)]"
+              style={{ fontFamily: "var(--font-display), system-ui, sans-serif" }}>
             Thank you for your feedback
           </h2>
-          <p className="text-lg text-[var(--color-kiosk-muted)]">
+          <p className="text-xl text-[var(--color-kiosk-muted)]">
             We&apos;ll use it to improve your next visit.
           </p>
         </div>
